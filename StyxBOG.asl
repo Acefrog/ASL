@@ -17,8 +17,7 @@ start
     {
 		if (current.isLoading || current.isLoading2)
 			return false;
-
-		return current.startFlag == 1 && old.startFlag == 1;
+		return current.startFlag == 1;
     }
 }
 
