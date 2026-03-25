@@ -16,7 +16,7 @@ state("Styx3-Win64-Shipping")
 startup
 {
     settings.Add("start_newgame", true, "Start timer on New Game");
-	settings.Add("reset", true, "Reset timer on Main Menu (Toggle off if buggy)");
+	settings.Add("reset", false, "Reset timer on Main Menu (Toggle off if buggy)");
 }
 
 start
