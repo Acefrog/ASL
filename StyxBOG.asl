@@ -1,6 +1,6 @@
 state("Styx3-Win64-Shipping")
 {
-	bool menu			:	0x09662438, 0x38, 0x3B0; 		//0 = Menu, 2 = In-game.
+	bool menu			:	0x096770C8, 0x7B0; 		//0 = Menu, 2 = In-game.
 	bool isLoading		:	0x09681CA8, 0x50, 0x46c; 		//Game Loading.
 	bool pressAnyKey	:	0x07F12DC8, 0x18; 				//Game Loaded, Press Any Key.
 	byte credits		:	0x07FD65D8, 0x1E0;				//Credits.
