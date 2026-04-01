@@ -1,58 +1,30 @@
 state("Styx3-Win64-Shipping")
 {
-	bool menu			:	0x096770C8, 0x7B0; 		//0 = Menu, 2 = In-game.
-	bool isLoading		:	0x09681CA8, 0x50, 0x46c; 		//Game Loading.
-	bool pressAnyKey	:	0x07F12DC8, 0x18; 				//Game Loaded, Press Any Key.
-	byte credits		:	0x07FD65D8, 0x1E0;				//Credits.
-	
-	int act				: 	0x096BD590, 0x18, 0x0, 0x5aC;	//Current Act.
-	int act1 			: 	0x096BEC18, 0x18, 0x100, 0xE8;
-	int act2 			: 	0x096BD590, 0x18, 0x58, 0x1C0;
-	int act3 			: 	0x096BD5B0, 0x18, 0x58, 0x298;
-	int act4 			: 	0x096BEC18, 0x18, 0x100, 0x370;
-	int act5 			: 	0x096BE978, 0x18, 0x150, 0x448;
-}
-
-startup
-{
-    settings.Add("start_newgame", true, "Start timer on New Game");
-	settings.Add("reset", false, "Reset timer on Main Menu (Toggle off if buggy)");
-}
-
-start
-{    
-	if (settings["start_newgame"])
-    {
-		return old.pressAnyKey && !current.pressAnyKey && current.menu;
-	}
+    bool isLoading		: 0x0971E8D0, 0x110, 0xEF4;
+	bool isAnyKey		: 0x0931B350, 0x68;
+    int CurrentAct		: 0x09718680, 0x18, 0x34;
+    int QuartzA1 		: 0x09718680, 0x18, 0x58, 0xE8;
+    int QuartzA2 		: 0x09718680, 0x18, 0x58, 0x1C0;
+    int QuartzA3 		: 0x09718680, 0x18, 0x58, 0x298;
+    int QuartzA4 		: 0x09718680, 0x18, 0x58, 0x360;
+    int QuartzA5 		: 0x09718680, 0x18, 0x58, 0x448;
 }
 
 isLoading
 {
-    return current.isLoading || current.pressAnyKey;
+    return current.isLoading || current. isAnyKey;
 }
 
 split
 {
-	return
+    return 
 	(
-		(
-			(current.act1 > old.act1) ||
-			(current.act2 > old.act2) ||
-			(current.act3 > old.act3) ||
-			(current.act4 > old.act4) ||
-			(current.act5 > old.act5)
-		)
-			|| (current.act > old.act)
-			|| (current.credits == 1 && old.credits != 1)
+		current.CurrentAct > old.CurrentAct ||
+		current.QuartzA1 > old.QuartzA1 ||
+		current.QuartzA2 > old.QuartzA2 ||
+		current.QuartzA3 > old.QuartzA3 ||
+		current.QuartzA4 > old.QuartzA4 ||
+		current.QuartzA5 > old.QuartzA5
 	)
-	&& !(old.act == 5 && current.act == 6);
-}
-
-reset
-{
-	if (settings["reset"])
-    {
-		return !current.menu && !current.isLoading && !current.pressAnyKey;
-	}
+	&& !(old.CurrentAct == 5 && current.CurrentAct == 6);
 }
